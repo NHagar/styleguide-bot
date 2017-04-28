@@ -36,4 +36,4 @@ def handle_message(event_data):
             message = "I don't have an entry for %s, try one of these: %s" % (text, suggestions)
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
-slack_events_adapter.start(port=3000)
+slack_events_adapter.start(port=33507)
