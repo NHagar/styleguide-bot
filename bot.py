@@ -60,7 +60,11 @@ styleguide = pickle.load(open('style_guide', 'rb'))
 @slack_events_adapter.on("message")
 def handle_message(event_data):
     message = event_data["event"]
-    if 'Horace' in message.get('text'):
+    if message.get('text') == 'Horace ls':
+        channel = message["channel"]
+        message = list(styleguide.keys())
+        CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+    elif 'Horace' in message.get('text'):
         text = message.get('text').split(' ')
         text.remove('Horace')
         text = ' '.join(text)
