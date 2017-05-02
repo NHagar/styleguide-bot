@@ -80,9 +80,5 @@ def handle_message(event_data):
             channel = message["channel"]
             message = "I don't have an entry for %s, try one of these: %s" % (text, suggestions)
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
-    if message.get('text') == 'Horace ls':
-        channel = message["channel"]
-        message = list(styleguide.keys())
-        CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
 slack_events_adapter.start(port=int(os.environ.get('PORT', 5000)))
