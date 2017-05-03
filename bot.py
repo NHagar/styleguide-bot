@@ -63,6 +63,7 @@ def handle_message(event_data):
     if message.get('text') == 'Horace ls':
         channel = message["channel"]
         message = list(styleguide.keys())
+        message.sort()
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
     elif 'Horace' in message.get('text'):
         text = message.get('text').split(' ')
