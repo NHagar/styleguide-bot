@@ -51,7 +51,7 @@ class SlackEventAdapter(EventEmitter):
         self.verification_token = verification_token
         self.server = SlackServer(verification_token, endpoint, self)
     def start(self, port=None, debug=False):
-        self.server.run(host='0.0.0.0', port=port)
+        self.server.run(host='127.0.0.1', port=port)
 
 
 slack_events_adapter = SlackEventAdapter(SLACK_VERIFICATION_TOKEN, endpoint="/slack_events")
@@ -85,4 +85,4 @@ def handle_message(event_data):
             message = "I don't have an entry for %s, try one of these: %s" % (text, suggestions)
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
-slack_events_adapter.start(port=int(os.environ.get('PORT', 5000)))
+slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
