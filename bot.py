@@ -83,7 +83,7 @@ def handle_message(event_data):
             suggestions = [i for i in suggestions]
             suggestions = list(set(suggestions))
             channel = message["channel"]
-            message = "I don't have an entry for %s, try one of these: %s" % (text, suggestions)
+            message = "I don't have an entry for %s, try one of these: %s" % (text, '; '.join(suggestions))
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
 slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
