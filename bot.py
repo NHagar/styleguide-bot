@@ -67,10 +67,8 @@ def handle_message(event_data):
     elif 'Horace add entry' in message.get('text'):
         text = message.get('text').split(' ')
         text = text[3:]
-        text = text.split(':')
-        text.remove(':')
-        term = text[0]
-        definition = ' '.join(text[1:])
+        term = ' '.join(text[0:text.index(':')])
+        definition = ' '.join(text[text.index(':')+1:])
         channel = message["channel"]
         message = 'Your term is %s, and your definition is %s' % (term, definition)
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
