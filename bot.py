@@ -51,7 +51,7 @@ class SlackEventAdapter(EventEmitter):
         self.verification_token = verification_token
         self.server = SlackServer(verification_token, endpoint, self)
     def start(self, port=None, debug=False):
-        self.server.run(host='127.0.0.1', port=port)
+        self.server.run(host='0.0.0.0', port=port)
 
 slack_events_adapter = SlackEventAdapter(SLACK_VERIFICATION_TOKEN, endpoint="/slack_events")
 styleguide = pickle.load(open('style_guide', 'rb'))
@@ -122,4 +122,4 @@ Only use these in direct messages with me! The style guide will get messy if eve
                 message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'horace help' to see everything in the style guide." % text
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
-slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
+slack_events_adapter.start(port=int(os.environ.get('PORT', 5000)))
