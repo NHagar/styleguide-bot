@@ -64,6 +64,16 @@ def handle_message(event_data):
         message = list(styleguide.keys())
         message.sort()
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+    elif 'Horace add entry' in message.get('text'):
+        text = message.get('text').split(' ')
+        text = text[3:]
+        text = text.split(':')
+        text.remove(':')
+        term = text[0]
+        definition = ' '.join(text[1:])
+        channel = message["channel"]
+        message = 'Your term is %s, and your definition is %s' % (term, definition)
+        CLIENT.api_call("chat.postMessage", channel=channel, text=message)
     elif 'Horace' in message.get('text'):
         text = message.get('text').split(' ')
         text.remove('Horace')
