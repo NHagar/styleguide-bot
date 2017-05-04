@@ -53,7 +53,6 @@ class SlackEventAdapter(EventEmitter):
     def start(self, port=None, debug=False):
         self.server.run(host='127.0.0.1', port=port)
 
-
 slack_events_adapter = SlackEventAdapter(SLACK_VERIFICATION_TOKEN, endpoint="/slack_events")
 styleguide = pickle.load(open('style_guide', 'rb'))
 
@@ -83,7 +82,10 @@ def handle_message(event_data):
             suggestions = [i for i in suggestions]
             suggestions = list(set(suggestions))
             channel = message["channel"]
-            message = "I don't have an entry for %s, try one of these: %s" % (text, '; '.join(suggestions))
+            if len(suggestions) > 0:
+                message = "I don't have an entry for %s, try one of these: %s" % (text, '; '.join(suggestions))
+            else:
+                message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'Horace ls' to see everything in the style guide." % text
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
 slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
