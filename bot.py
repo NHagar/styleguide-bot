@@ -85,7 +85,7 @@ def handle_message(event_data):
             if len(suggestions) > 0:
                 message = "I don't have an entry for %s, try one of these: %s" % (text, '; '.join(suggestions))
             else:
-                message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'Horace ls' to see everything in the style guide." % text
+                message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'ls' to see everything in the style guide." % text
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
 slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
