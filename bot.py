@@ -59,10 +59,16 @@ styleguide = pickle.load(open('style_guide', 'rb'))
 @slack_events_adapter.on("message")
 def handle_message(event_data):
     message = event_data["event"]
-    if message.get('text') == 'Horace ls':
+    if message.get('text') == 'Horace help':
         channel = message["channel"]
         message = list(styleguide.keys())
         message.sort()
+        CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+    elif message.get('text') == 'Horace admin':
+        channel = message["channel"]
+        message = '''"horace add entry term : definiton" adds a new item to the style guide. There has to be a space on either side of the :.
+"horace overwrite term : definition" changes the definiton of an existing term. Again, space on either side.
+Only use these in direct messages with me! The style guide will get messy if everyone knows how to change it.'''
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
     elif 'Horace add entry' in message.get('text'):
         text = message.get('text').split(' ')
@@ -113,7 +119,7 @@ def handle_message(event_data):
             if len(suggestions) > 0:
                 message = "I don't have an entry for %s, try one of these: %s" % (text, '; '.join(suggestions))
             else:
-                message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'ls' to see everything in the style guide." % text
+                message = "I don't have an entry for %s. Try searching a letter or fragment, or use 'horace help' to see everything in the style guide." % text
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
 
 slack_events_adapter.start(port=int(os.environ.get('PORT', 3000)))
