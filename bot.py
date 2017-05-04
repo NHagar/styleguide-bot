@@ -69,8 +69,28 @@ def handle_message(event_data):
         text = text[3:]
         term = ' '.join(text[0:text.index(':')])
         definition = ' '.join(text[text.index(':')+1:])
+        term.lower()
+        check = styleguide.get(term)
+        if check != None:
+            channel = message["channel"]
+            message = 'I already have an entry for %s. Use "horace overwrite term : new definiton" if you really want to change it.' % term
+            CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+        else:
+            styleguide[term] = definition
+            pickle.dump(styleguide, open('style_guide', 'wb'))
+            channel = message["channel"]
+            message = 'I added %s to the style guide, with definition %s.' % (term, definition)
+            CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+    elif 'Horace overwrite' in message.get('text'):
+        text = message.get('text').split(' ')
+        text = text[2:]
+        term = ' '.join(text[0:text.index(':')])
+        definition = ' '.join(text[text.index(':')+1:])
+        term.lower()
+        styleguide[term] = definition
+        pickle.dump(styleguide, open('style_guide', 'wb'))
         channel = message["channel"]
-        message = 'Your term is %s, and your definition is %s' % (term, definition)
+        message = 'I added %s to the style guide, with definition %s.' % (term, definition)
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
     elif 'Horace' in message.get('text'):
         text = message.get('text').split(' ')
