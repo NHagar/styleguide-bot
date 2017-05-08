@@ -82,7 +82,7 @@ Only use these in direct messages with me! The style guide will get messy if eve
             message = 'I already have an entry for %s. Use "horace overwrite term : new definiton" if you really want to change it.' % term
             CLIENT.api_call("chat.postMessage", channel=channel, text=message)
         else:
-            styleguide[term] = definition
+            styleguide[term.lower()] = definition
             pickle.dump(styleguide, open('style_guide', 'wb'))
             channel = message["channel"]
             message = 'I added %s to the style guide, with definition %s.' % (term, definition)
@@ -93,7 +93,7 @@ Only use these in direct messages with me! The style guide will get messy if eve
         term = ' '.join(text[0:text.index(':')])
         definition = ' '.join(text[text.index(':')+1:])
         term.lower()
-        styleguide[term] = definition
+        styleguide[term.lower()] = definition
         pickle.dump(styleguide, open('style_guide', 'wb'))
         channel = message["channel"]
         message = 'I added %s to the style guide, with definition %s.' % (term, definition)
