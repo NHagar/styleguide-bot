@@ -98,6 +98,19 @@ Only use these in direct messages with me! The style guide will get messy if eve
         channel = message["channel"]
         message = 'I added %s to the style guide, with definition %s.' % (term, definition)
         CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+    elif 'Horace delete' in message.get('text'):
+        text = message.get('text').split(' ')
+        text = ' '.join(text[2:])
+        try:
+            del styleguide[text]
+            pickle.dump(styleguide, open('style_guide', 'wb'))
+            channel = message["channel"]
+            message = 'I deleted %s from the style guide.' % text
+            CLIENT.api_call("chat.postMessage", channel=channel, text=message)
+        except:
+            channel = message["channel"]
+            message = 'I don\'t have an entry for %s.' % text
+            CLIENT.api_call("chat.postMessage", channel=channel, text=message)
     elif 'Horace' in message.get('text'):
         text = message.get('text').split(' ')
         text.remove('Horace')
