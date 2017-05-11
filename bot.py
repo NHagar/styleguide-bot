@@ -54,10 +54,10 @@ class SlackEventAdapter(EventEmitter):
         self.server.run(host='0.0.0.0', port=port)
 
 slack_events_adapter = SlackEventAdapter(SLACK_VERIFICATION_TOKEN, endpoint="/slack_events")
-styleguide = pickle.load(open('style_guide', 'rb'))
 
 @slack_events_adapter.on("message")
 def handle_message(event_data):
+    styleguide = pickle.load(open('style_guide', 'rb'))
     message = event_data["event"]
     if message.get('text') == 'Horace help':
         channel = message["channel"]
