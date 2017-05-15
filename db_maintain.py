@@ -18,6 +18,7 @@ cur = conn.cursor()
 def create_table():
     '''makes table'''
     cur.execute("CREATE TABLE horace (term varchar, definition varchar);")
+    conn.commit()
 
 def insert_dict(sguide):
     '''add existing dictionary to table'''
@@ -28,6 +29,12 @@ def insert_dict(sguide):
 
     for i in sgdict:
         cur.execute("INSERT INTO horace VALUES (%s, %s)", i)
+        conn.commit()
+
+def test_table():
+    cur.execute("SELECT * FROM horace")
+    print cur.fetchall()
 
 create_table()
 insert_dict(styleguide)
+test_table()
