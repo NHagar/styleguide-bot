@@ -27,7 +27,7 @@ def insert_dict(sguide):
     sgdict = zip(terms, definitions)
 
     for i in sgdict:
-        cur.execute("INSERT INTO horace VALUES (%s, %s)", [i])
+        cur.execute("INSERT INTO horace VALUES (%s, %s)", i)
 
 create_table()
 insert_dict(styleguide)
