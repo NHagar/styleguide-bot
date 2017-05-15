@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 import os
-import pickle
 import difflib
 import json
 from urlparse import urlparse
